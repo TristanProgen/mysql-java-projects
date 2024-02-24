@@ -11,6 +11,7 @@ import projects.service.ProjectService;
 
 public class ProjectsApp {
 	
+	// Object to take user input for the app's menu
 	private Scanner scanner = new Scanner(System.in);
 	
 	private ProjectService projectService = new ProjectService();
@@ -32,6 +33,8 @@ public class ProjectsApp {
 		
 
 	}
+	
+	
 	private void processUserSelections() {
 		boolean done = false;
 		
@@ -67,8 +70,7 @@ public class ProjectsApp {
 		String projectName = getStringInput("Enter the project name");
 		BigDecimal estimatedHours = getDecimalInput("Enter the estimated hours");
 		BigDecimal actualHours = getDecimalInput("Enter the actual hours");
-		Integer difficulty = getIntInput("Enter the project difficulty (1-5)");
-		 
+		Integer difficulty = validateDifficultyInput("Enter the project difficulty (1-5)"); 
 		String notes = getStringInput("Enter the project notes");
 		
 		Project project = new Project();
@@ -82,6 +84,45 @@ public class ProjectsApp {
 		Project dbProject = projectService.addProject(project);
 		System.out.println("You have sucesfully created project: " + dbProject);
 		
+	}
+	
+	// check for not null not a char and is an int between 1 and 5 inclusive 
+	private Integer validateDifficultyInput(String prompt) {
+		String input = getStringInput(prompt);
+		boolean intTest = isInteger(input);
+		
+		
+
+		while(Objects.isNull(input)
+				|| intTest == false
+				|| Integer.valueOf(input) < 1 
+				|| Integer.valueOf(input) > 5
+				
+				 ) {
+			
+			System.out.println("Please enter a valid difficulty");
+			input = getStringInput(prompt);
+			intTest = isInteger(input);
+			
+		}
+		
+		return Integer.valueOf(input);
+		
+			
+	}
+
+	private boolean isInteger(String input) {
+		if( Objects.isNull(input)) {
+			return false;
+		}
+		else {
+			for (int i = 0; i < input.length(); i++) {
+		        if (!Character.isDigit(input.charAt(i))) {
+		            return false;
+		        }
+		    }
+		    return true;
+		}
 	}
 	
 	
@@ -110,7 +151,7 @@ public class ProjectsApp {
 			return Integer.valueOf(input);
 		}
 		catch(NumberFormatException e) {
-			throw new DbException(input + "is not a valid number.");
+			throw new DbException(input + " is not a valid number.");
 			
 		}
 		

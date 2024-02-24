@@ -28,8 +28,21 @@ public class ProjectDao extends DaoBase {
 				
 		//@formatter:on
 		
+		/** Steps to insert data in to DB
+		 * 1) get a connection 
+		 * 2) start the transaction 
+		 * 3) commit the transaction 
+		 * 
+		 */
+		
+		
+		// get a connection object 
 		try(Connection conn = DbConnection.getConnection()){
+			
+			// start the transaction
 			startTransaction(conn);
+			
+			// Build prepared statement
 			try(PreparedStatement stmt = conn.prepareStatement(sql)){
 				
 				setParameter(stmt, 1, project.getProjectName(), String.class);
@@ -38,11 +51,17 @@ public class ProjectDao extends DaoBase {
 				setParameter(stmt, 4, project.getDifficulty(), Integer.class);
 				setParameter(stmt, 5, project.getNotes(), String.class);
 				
+				// Sends the SQL "INSERT INTO" command 
 				stmt.executeUpdate();
 				
+				// retrieves the last Id inserted ( the project id) 
 				Integer projectId = getLastInsertId(conn, PROJECT_TABLE);
+				
+				
+				//Commits the transaction 
 				commitTransaction(conn);
 				
+				// sets the Id retrieved to be the projectId value on the project object
 				project.setProjectId(projectId);
 				return project;
 				

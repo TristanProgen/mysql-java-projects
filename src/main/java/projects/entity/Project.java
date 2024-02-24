@@ -87,12 +87,12 @@ public class Project {
   public String toString() {
     String result = "";
     
-    result += "\n   ID=" + projectId;
-    result += "\n   name=" + projectName;
-    result += "\n   estimatedHours=" + estimatedHours;
-    result += "\n   actualHours=" + actualHours;
-    result += "\n   difficulty=" + difficulty;
-    result += "\n   notes=" + notes;
+    result += "\n   ID = " + projectId;
+    result += "\n   name = " + projectName;
+    result += "\n   estimatedHours = " + estimatedHours;
+    result += "\n   actualHours = " + actualHours;
+    result += "\n   difficulty = " + difficulty;
+    result += "\n   notes = " + notes;
     
     result += "\n   Materials:";
     
