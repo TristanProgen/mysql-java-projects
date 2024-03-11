@@ -47,6 +47,6 @@ public class Step {
 
   @Override
   public String toString() {
-    return "ID=" + stepId + ", stepText=" + stepText;
+    return "ID = " + stepId + ", stepText = " + stepText;
   }
 }

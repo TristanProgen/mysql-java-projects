@@ -58,7 +58,7 @@ public class Material {
 
   @Override
   public String toString() {
-    return "ID=" + materialId + ", materialName=" + materialName + ", numRequired=" + numRequired
-        + ", cost=" + cost;
+    return "ID = " + materialId + ", materialName = " + materialName + ", numRequired = " + numRequired
+        + ", cost = " + cost;
   }
 }
