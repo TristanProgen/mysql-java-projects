@@ -87,17 +87,12 @@ public class ProjectsApp {
 	}
 	
 	private void deleteProject() {
-		if(Objects.isNull(curProject)) {
-			
-			System.out.println("\n Please secect a current project first");
-			
-			return;
-			
-			}
+		
 		
 		listProjects();
 		
-		Integer projectId = getIntInput("Enter the ID of the project you wish to delete");
+		Integer projectId = getIntInput("Enter the id of the project you wiish to delete");
+		
 		
 		projectService.deleteProject(projectId);
 		
@@ -112,6 +107,10 @@ public class ProjectsApp {
 
 
 	private void updateProjectDetails() {
+		
+		
+		// Checking if we have a project selected 
+		
 		if(Objects.isNull(curProject)) {
 			
 		System.out.println("\n Please secect a current project first");
@@ -120,21 +119,52 @@ public class ProjectsApp {
 		
 		}
 		
-		String projectName = getStringInput(
-				"Enter the project name: current value is  [" +curProject.getProjectName() + "]");
+		// Updating the currently selected project 
 		
-		BigDecimal estimatedHours = getDecimalInput(
-				"Enter the estimated hours: current value is  [" + curProject.getEstimatedHours() + "]");
-		
-		BigDecimal actualHours = getDecimalInput(
-				"Enter the actual hours: current value is   [" + curProject.getActualHours() +"]");
-		
-		Integer difficulty = validateDifficultyInput(
-				"Enter the project difficulty (1-5): current value is  [" + curProject.getDifficulty() + "]");
-		
-		String notes = getStringInput("Enter project notes: current value is  [" + curProject.getNotes() + "]");
+		System.out.println("\n\n******************** Updatating Project Details ********************\n");
 		
 		Project project = new Project();
+		
+		
+		
+		//@formatter:off
+		String projectName = getStringInput(
+				"\nCurrent Project Name: "
+				+ "[" + curProject.getProjectName() + "]" 
+	            + "\nPress \"ENTER\" to keep the current value the same" 
+				+ "\n\t\t\t  OR   "
+	            + "\nPlease input the new project name followed by the \"ENTER\" key");
+		
+		
+		BigDecimal estimatedHours = getDecimalInput(
+				"\n\nCurrent estimated hours: " 
+				+ "[" + curProject.getEstimatedHours() + "]"
+				+ "\nPress \"ENTER\" key to keep the current value the same" 
+				+ "\n\t\t\t  OR   "
+	            + "\nPlease input the new estimated hours followed by the \"ENTER\" key");
+		
+		BigDecimal actualHours = getDecimalInput(
+				"\n\nCurrent actual hours: "
+				+ "[" + curProject.getActualHours() + "]"
+				+ "\nPress \"ENTER\" key to keep the current value the same" 
+				+ "\n\t\t\t  OR   "
+			    + "\nPlease input the new actual hours followed by the \"ENTER\" key");
+		
+		Integer difficulty = validateDifficultyInput(
+				"\n\nCurrent project difficutly : "
+				+ "[" + curProject.getDifficulty() + "]"
+				+ "\n Please input the new project difficulty (1-5)"
+				);
+		
+		String notes = getStringInput(
+				"\n\nCurrent Notes: "
+				+ "[" + curProject.getNotes() + "]"
+				+ "\nPress \"ENTER\" key to keep the current value the same" 
+				+ "\n\t\t\t  OR   "
+				+ "\nPlease input the new Notes followed by the \"ENTER\" key" 
+				+ "\n" + "\n");
+		
+		//@formatter:on
 		
 		project.setProjectId(curProject.getProjectId());
 		
@@ -159,12 +189,6 @@ public class ProjectsApp {
 		curProject = projectService.fetchProjectById(curProject.getProjectId());
 		
 		
-		
-		
-		
-		
-		
-		
 	}
 
 
@@ -184,6 +208,7 @@ public class ProjectsApp {
 
 
 	private void listProjects() {
+		curProject = null;
 		List<Project> projects = projectService.fetchAllProjects();
 		
 		System.out.println("\nProjects:");
